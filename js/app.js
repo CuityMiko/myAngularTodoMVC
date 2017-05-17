@@ -3,7 +3,7 @@
 	//声明模块
 	var myapp=angular.module('todoMvcApp',[]);
 	//声明控制器
-	myapp.controller('MainController',['$scope',function($scope){
+	myapp.controller('MainController',['$scope','$location',function($scope,$location){
 		//输入内容
 		$scope.content='';
 		//内容列表
@@ -93,6 +93,28 @@
 				$scope.checkall=_statusflag;
 			}
 		}
+		//切换状态
+		//获取状态值
+		$scope.condition={};
+		//将$location服务赋值给$scope成员从而监视$location的变化
+		$location.path() //拿到url中的锚点的变化
+		$scope.$location=$location;
+		$scope.cururl='#/';
+		$scope.$watch('$location.url()',function(now,old){
+			switch (decodeURIComponent(now)) {
+				case '#/active': 
+					$scope.condition={completed:false,deleted:false};
+					break;
+				case '#/completed':
+					$scope.condition={completed:true,deleted:false};
+					break;
+				default:
+					$scope.condition={deleted:false};
+					break;
+			}
+			if(now)
+				$scope.cururl=decodeURIComponent(now);
+		})
 	}])
 
 })(angular);
