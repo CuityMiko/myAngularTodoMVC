@@ -1,0 +1,72 @@
+<!doctype html>
+<html lang="en">
+	<head>
+		<meta charset="utf-8">
+		<meta name="viewport" content="width=device-width, initial-scale=1">
+		<title>Template • TodoMVC</title>
+		<!--此处依赖一个json文件可注释不用-->
+		<!--<link rel="stylesheet" href="node_modules/todomvc-common/base.css">-->
+		<link rel="stylesheet" href="node_modules/todomvc-app-css/index.css">
+		<link rel="stylesheet" href="css/app.css">
+	</head>
+	<body ng-app="todoMvcApp">
+		<section class="todoapp" ng-controller="MainController">
+			<header class="header">
+				<h1>todos</h1>
+				<form ng-submit="todo()">
+					<input class="new-todo" placeholder="What needs to be done?" autofocus ng-model="content" />
+				</form>
+			</header>
+			<section class="main">
+				<div ng-click="changeCheckStatus(1,checkall)">
+					<input class="toggle-all" type="checkbox" ng-model="checkall"/>
+					<label for="toggle-all">Mark all as complete</label>
+				</div>
+				<ul class="todo-list">
+					<!-- List items should get the class `editing` when editing and `completed` when marked as completed -->
+					<li ng-repeat="todo in todos" ng-class="{completed:todo.completed,editing:editingid===todo.id}" ng-hide="todo.deleted" ng-dblclick="editing(todo.id,todo.completed)">
+						<div class="view">
+							<input class="toggle" type="checkbox" ng-model="todo.completed" ng-click="changeCheckStatus(2)">
+							<label>{{todo.content}}</label>
+							<button class="destroy" ng-click="delete(todo.id)"></button>
+						</div>
+						<form ng-submit="completedEdit()">
+							<input class="edit" ng-model="todo.content" />
+						</form>
+					</li>
+				</ul>
+			</section>
+			<!-- This footer should hidden by default and shown when there are todos -->
+			<footer class="footer">
+				<!-- This should be `0 items left` by default -->
+				<span class="todo-count"><strong>{{total}}</strong> item left</span>
+				<!-- Remove this if you don't implement routing -->
+				<ul class="filters">
+					<li>
+						<a class="selected" href="#/">All</a>
+					</li>
+					<li>
+						<a href="#/active">Active</a>
+					</li>
+					<li>
+						<a href="#/completed">Completed</a>
+					</li>
+				</ul>
+				<!-- Hidden if no completed items are left ↓ -->
+				<button class="clear-completed" ng-show="ishow()" ng-click="deleteAll()">Clear completed</button>
+			</footer>
+		</section>
+		<footer class="info">
+			<p>Double-click to edit a todo</p>
+			<!-- Remove the below line ↓ -->
+			<p>Template by <a href="http://sindresorhus.com">Sindre Sorhus</a></p>
+			<!-- Change this out with your name and url ↓ -->
+			<p>Created by <a href="http://todomvc.com">you</a></p>
+			<p>Part of <a href="http://todomvc.com">TodoMVC</a></p>
+		</footer>
+		<!--此处依赖一个json文件可注释不用-->
+		<!--<script src="node_modules/todomvc-common/base.js"></script>-->
+		<script src="libs/angular.js"></script>
+		<script src="js/app.js"></script>
+	</body>
+</html>
