@@ -115,6 +115,10 @@
 			if(now)
 				$scope.cururl=decodeURIComponent(now);
 		})
+		//由于filter是模糊查询，则创建自定义比较函数
+		$scope.compare=function(source,target){
+			return source===target;
+		}
 	}])
 
 })(angular);
